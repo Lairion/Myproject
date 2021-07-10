@@ -1,5 +1,5 @@
 from django import forms
-from bowling.models import RowSession, Row
+from bowling.models import RowSession, Row, Player
 from django.contrib.auth.models import User
 
 class RowSessionCreateForm(forms.ModelForm):
@@ -14,4 +14,15 @@ class RowSessionCreateForm(forms.ModelForm):
 
     class Meta:
         model = RowSession
+        fields = "__all__"
+
+class PlayerForm(forms.ModelForm):
+
+    last_update = forms.DateField(widget=forms.SelectDateWidget(
+        empty_label=("Choose Year", "Choose Month", "Choose Day"),
+        )
+    )
+
+    class Meta:
+        model = Player
         fields = "__all__"

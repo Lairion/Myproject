@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.urls import reverse
+# from bowling.forms import PlayerForm
 # Create your models here.
 class Row(models.Model):
 
@@ -25,6 +26,9 @@ class RowSession(models.Model):
     def display_username(self):
         return self.user.username
 
+    def get_absolute_url(self):
+        return reverse('row_session-detail', kwargs={'pk' : self.pk})
+
     def __str__(self):
         return f"{self.user.username} {self.pk}"
 
@@ -38,6 +42,11 @@ class Player(models.Model):
         on_delete=models.CASCADE,
         related_name="players"
     )
+
+    # def get_form(self, initial=None):
+    #     if initial:
+    #         return PlayerForm(initial=initial)
+    #     return PlayerForm()
 
     @property
     def score(self):
