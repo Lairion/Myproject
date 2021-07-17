@@ -6,7 +6,8 @@ from bowling.views import (
     RowSessionCreateView,
     RowSessionUpdateView,
     PlayerCreateView,
-    PlayerUpdateView
+    PlayerUpdateView,
+    make_throws
 )
 urlpatterns = [
     path("row/", RowListView.as_view(), name="row-list" ),
@@ -28,6 +29,10 @@ urlpatterns = [
     path("row_session/<int:pk>",
         RowSessionDetailView.as_view(),
         name="row_session-detail"
+    ),
+    path("row_session/<int:pk>/throws",
+        make_throws,
+        name="row_session-throws"
     ),
     path("player/create",
         PlayerCreateView.as_view(),

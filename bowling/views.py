@@ -1,10 +1,49 @@
 from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.models import User
-from bowling.models import Row, RowSession, Player
+from bowling.models import Row, RowSession, Player, PersonalFrame, PersonalThrow
 from bowling.forms import RowSessionCreateForm, PlayerForm
+
+
+def make_throws(request, pk):
+    if request.is_ajax and request.method == "POST":
+        data = request.POST
+        player_pk = int(data.get("player"))
+        frame_name = data.get("frame_name")
+        player = Player.objects.get(pk=player_pk)
+        frame = PersonalFrame.objects.create(name=frame_name, player=player)
+        throw_1 = data.get("throw_1")
+        throw_2 = data.get("throw_2")
+        if throw_1 == "X":
+            PersonalThrow.objects.create(
+                frame=frame,
+                name="Throw Strike",
+                value=throw_1,
+            )
+            return JsonResponse({"status":"success"})
+        if throw_2 == "/":
+            PersonalThrow.objects.create(
+                frame=frame,
+                name="Throws Spare",
+                value=throw_1,
+            )
+            return JsonResponse({"status":"success"})
+        PersonalThrow.objects.create(
+            frame=frame,
+            name="Throw one",
+            value=throw_1,
+        )
+        PersonalThrow.objects.create(
+            frame=frame,
+            name="Throw two",
+            value=throw_2,
+        )
+        return JsonResponse({"status":"success"})
+
+
 
 # Create your views here.
 class RowListView(ListView):

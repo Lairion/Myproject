@@ -59,7 +59,7 @@ class Player(models.Model):
 class PersonalFrame(models.Model):
 
     name = models.CharField(max_length=100)
-    row = models.ForeignKey(
+    player = models.ForeignKey(
         "bowling.Player",
         on_delete=models.CASCADE,
         related_name="frames"
@@ -77,7 +77,7 @@ class PersonalThrow(models.Model):
 
     name = models.CharField(max_length=100)
     value = models.CharField(max_length=2)
-    row = models.ForeignKey(
+    frame = models.ForeignKey(
         "bowling.PersonalFrame",
         on_delete=models.CASCADE,
         related_name="throws"

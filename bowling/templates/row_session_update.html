@@ -2,6 +2,7 @@
 
 {%  block content %}
 <p>Hello I update form</p>
+<input id="redirect" type="hidden" name="return_url" value="{% url "row_session-detail" object.pk %}">
 <form id="row_session" class="form-contol" action="" method="post">
   {% csrf_token %}
   {{ form.as_p }}
@@ -10,7 +11,7 @@
 <div class="players">
   {% for player in list_of_entry %}
   <div class="player">
-    <form class="player_form form-control" action="{% url 'player-update' player.0.pk %}" method="post">
+    <form class="player_form player_update form-control" action="{% url 'player-update' player.0.pk %}" method="post">
     <div class="row">
       {% csrf_token %}
       {{ player.1.as_p }}
@@ -20,7 +21,7 @@
   </div>
   {% endfor %}
   <div class="player">
-  <form class="player_form form-control" action="{% url 'player-create' %}" method="post">
+  <form class="player_form player_create form-control" action="{% url 'player-create' %}" method="post">
     <div class="row">
       {% csrf_token %}
       {{ player_form.as_p }}
@@ -34,13 +35,30 @@
 
 {% block extra_js %}
 <script>
-  // $( document ).ready( function() {
-  //   $( "#row_session" ).submit(function( event ) {
-  //
-  //     alert($(this));
-  //     console.log($(this).data)
-  //     event.preventDefault();
-  //   });
-  // })
+  $( document ).ready( function() {
+    $( "#row_session" ).submit(function( event ) {
+      event.preventDefault();
+      $.ajax({
+        url: $(this).attr("action"),
+        method: $(this).attr("method"),
+        data: $(this).serializeArray(),
+        success: function(response, status, request ) {
+          window.location.href = $("#redirect").attr("value")
+        }
+      })
+    });
+    $( ".player_update" ).submit(function( event ) {
+      event.preventDefault();
+      $.ajax({
+        url: $(this).attr("action"),
+        method: $(this).attr("method"),
+        data: $(this).serializeArray(),
+        success: function(response) {
+          console.log(response)
+          alert("success")
+        }
+      })
+    });
+  })
 </script>
 {% endblock %}
