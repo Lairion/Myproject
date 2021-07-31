@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', include('smuggler.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/', include('car.api.urls'))
+    path('api/', include('car.api.urls')),
+    path('rest-auth/', include('rest_auth.urls'))
 ]
