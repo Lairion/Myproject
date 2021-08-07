@@ -1,6 +1,6 @@
 *.pyc
-\.idea\
-\env\
+/.idea/
+/env/
 *.sqlite3
-\media\
-\staticfiles\
+/media/
+/staticfiles/

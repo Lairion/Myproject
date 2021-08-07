@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {%  block content %}
 <p>Hello I update form</p>
 <input id="redirect" type="hidden" name="return_url" value="{% url "row_session-detail" object.pk %}">
@@ -47,18 +47,7 @@
         }
       })
     });
-    $( ".player_update" ).submit(function( event ) {
-      event.preventDefault();
-      $.ajax({
-        url: $(this).attr("action"),
-        method: $(this).attr("method"),
-        data: $(this).serializeArray(),
-        success: function(response) {
-          console.log(response)
-          alert("success")
-        }
-      })
-    });
   })
 </script>
+<script src="{% static 'bowling\js\player_upload.js' %}"></script>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Car, CarModel, Company
+from .models import Car, CarModel, Company, CarColor
 # Register your models here.
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
@@ -12,7 +12,7 @@ class CarAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                ("name", "vin_number"),
+                ("name", "vin_number", "color"), "image"
             )
         }),
         ('Advanced options', {
@@ -37,6 +37,13 @@ class CarModelAdmin(admin.ModelAdmin):
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
+    list_display = [
+        "name"
+    ]
+
+
+@admin.register(CarColor)
+class CarColorAdmin(admin.ModelAdmin):
     list_display = [
         "name"
     ]

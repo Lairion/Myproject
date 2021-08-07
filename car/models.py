@@ -17,6 +17,7 @@ class Car(models.Model):
         null=True,
         related_name="cars"
     )
+    image = models.ImageField(upload_to="uploads/%Y/%m/%d/", null=True)
 
     def company(self):
         if self.car_model:
@@ -49,7 +50,7 @@ class CarColor(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = "Companies"
+        verbose_name_plural = "Colors"
 
 class Company(models.Model):
 
